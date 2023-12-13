@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fic7_app/pages/utils/images.dart';
+import 'package:flutter_fic7_app/data/datasources/auth_local_datasource.dart';
+
+
+import '../utils/images.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -16,13 +19,25 @@ class _HomePageState extends State<DashboardPage> {
 
   bool singleVendor = false;
 
+  String token = '';
+
   @override
   void initState() {
     super.initState();
 
+    AuthLocalDatasource().getToken().then((value) {
+      setState(() {
+        token = value;
+      });
+    });
+
     _screens = [
       const Center(
-        child: Text('Home'),
+        child: Column(
+          children: [
+            Text('Home'),
+          ],
+        ),
       ),
       const Center(
         child: Text('Order'),
@@ -36,6 +51,7 @@ class _HomePageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(token)),
       key: _scaffoldKey,
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).primaryColor,
@@ -82,12 +98,9 @@ class _HomePageState extends State<DashboardPage> {
 
   List<BottomNavigationBarItem> _getBottomWidget(bool isSingleVendor) {
     List<BottomNavigationBarItem> list = [];
-
     list.add(_barItem(Images.homeImage, 'Home', 0));
-    list.add(_barItem(Images.shoppingImage, 'Order', 1));
-
+    list.add(_barItem(Images.shoppingImage, 'Orders', 1));
     list.add(_barItem(Images.moreImage, 'More', 2));
-
     return list;
   }
 }
