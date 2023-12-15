@@ -24,5 +24,4 @@ class Images {
   static const String helpCenter = 'assets/images/help_center.png';
   static const String aboutUs = 'assets/images/about_us.png';
   static const String contactUs = 'assets/images/contact_us.png';
-  
 }
